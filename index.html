@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dilshod Ulmasov — Portfolio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="site-nav">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-brand">DU</a>
+
+      <nav class="nav-links" id="nav-links" aria-label="Primary">
+        <a href="#hero" class="nav-link">Home</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#skills" class="nav-link">Skills</a>
+        <a href="#work" class="nav-link">Projects</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </nav>
+
+      <button
+        type="button"
+        class="nav-toggle"
+        id="nav-toggle"
+        aria-expanded="false"
+        aria-controls="nav-links"
+        aria-label="Toggle navigation menu"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Animated particle network, sits behind everything -->
+  <canvas id="particle-canvas"></canvas>
+
+  <!-- Ambient gradient glow, drifts slowly behind the particles -->
+  <div class="glow glow-a"></div>
+  <div class="glow glow-b"></div>
+
+  <main class="hero" id="hero">
+    <div class="hero-content">
+      <h1 class="hero-name">Dilshod Ulmasov</h1>
+      <p class="hero-title">Computer Science Student &amp; Developer</p>
+      <p class="hero-tagline">
+        I build clean, thoughtful software — turning complicated problems
+        into interfaces that feel obvious to use.
+      </p>
+
+      <div class="hero-cta">
+        <a href="#work" class="btn btn-primary">View My Work</a>
+        <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+      </div>
+    </div>
+
+    <div class="scroll-cue" aria-hidden="true">
+      <span class="scroll-cue-line"></span>
+    </div>
+  </main>
+
+  <section class="about" id="about">
+    <div class="section-inner">
+      <p class="section-eyebrow reveal">About</p>
+      <h2 class="section-heading reveal">Who I Am</h2>
+
+      <div class="about-bio reveal">
+        <p>
+          I'm a Computer Science student at Brunel University London's
+          Pathway College, based in London, with a growing focus on web
+          development. What draws me to the web is the mix of logic and
+          craft it demands — a page has to work correctly and feel right,
+          and I like sitting at that intersection, turning an idea into
+          something people can actually click through and use.
+        </p>
+        <p>
+          Most of what I know I've picked up by building: putting together
+          full sites from scratch, working through layout and interaction
+          problems, and getting comfortable with the tools that make
+          development sustainable, like Git and responsive design
+          principles. I care about writing code that's easy to come back
+          to and interfaces that don't get in the user's way, and I'm
+          always looking for the next project that pushes what I can
+          build.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="skills" id="skills">
+    <div class="section-inner">
+      <p class="section-eyebrow reveal">Skills</p>
+      <h2 class="section-heading reveal">What I Work With</h2>
+
+      <div class="skills-grid">
+        <div class="skill-card reveal">
+          <span class="skill-icon" aria-hidden="true">HT</span>
+          <span class="skill-name">HTML5</span>
+          <span class="skill-tag">Markup</span>
+        </div>
+        <div class="skill-card reveal">
+          <span class="skill-icon" aria-hidden="true">CS</span>
+          <span class="skill-name">CSS3</span>
+          <span class="skill-tag">Styling</span>
+        </div>
+        <div class="skill-card reveal">
+          <span class="skill-icon" aria-hidden="true">JS</span>
+          <span class="skill-name">JavaScript</span>
+          <span class="skill-tag">Language</span>
+        </div>
+        <div class="skill-card reveal">
+          <span class="skill-icon" aria-hidden="true">Re</span>
+          <span class="skill-name">React</span>
+          <span class="skill-tag">Framework</span>
+        </div>
+        <div class="skill-card reveal">
+          <span class="skill-icon" aria-hidden="true">Py</span>
+          <span class="skill-name">Python</span>
+          <span class="skill-tag">Language</span>
+        </div>
+        <div class="skill-card reveal">
+          <span class="skill-icon" aria-hidden="true">Gh</span>
+          <span class="skill-name">Git &amp; GitHub</span>
+          <span class="skill-tag">Tooling</span>
+        </div>
+        <div class="skill-card reveal">
+          <span class="skill-icon" aria-hidden="true">Rd</span>
+          <span class="skill-name">Responsive Design</span>
+          <span class="skill-tag">Practice</span>
+        </div>
+        <div class="skill-card reveal">
+          <span class="skill-icon" aria-hidden="true">Ux</span>
+          <span class="skill-name">UI / UX Design</span>
+          <span class="skill-tag">Practice</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="work" id="work">
+    <div class="section-inner">
+      <p class="section-eyebrow reveal">Projects</p>
+      <h2 class="section-heading reveal">What I've Built</h2>
+
+      <div class="projects-grid">
+        <div class="project-card reveal">
+          <h3 class="project-title">Kindergarten Website</h3>
+          <p class="project-description">
+            A colorful, welcoming site for a kindergarten, built from
+            scratch with friendly typography, simple navigation, and a
+            fully responsive layout.
+          </p>
+          <div class="project-tech">
+            <span class="tech-tag">HTML5</span>
+            <span class="tech-tag">CSS3</span>
+            <span class="tech-tag">Responsive Design</span>
+          </div>
+          <a href="#" class="btn btn-secondary">View Project</a>
+        </div>
+
+        <div class="project-card reveal">
+          <h3 class="project-title">Tutoring Co. Website</h3>
+          <p class="project-description">
+            A marketing site for a tutoring company, complete with a blog
+            section, built as part of a web design course project.
+          </p>
+          <div class="project-tech">
+            <span class="tech-tag">Wix</span>
+            <span class="tech-tag">HTML</span>
+            <span class="tech-tag">CSS</span>
+          </div>
+          <a href="#" class="btn btn-secondary">View Project</a>
+        </div>
+
+        <div class="project-card reveal">
+          <h3 class="project-title">This Portfolio</h3>
+          <p class="project-description">
+            The site you're on right now — a dark, animated portfolio
+            built section by section with a canvas particle background
+            and scroll-triggered reveals.
+          </p>
+          <div class="project-tech">
+            <span class="tech-tag">HTML5</span>
+            <span class="tech-tag">CSS3</span>
+            <span class="tech-tag">JavaScript</span>
+          </div>
+          <a href="#" class="btn btn-secondary">View Project</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="section-inner">
+      <p class="section-eyebrow reveal">Contact</p>
+      <h2 class="section-heading reveal">Get In Touch</h2>
+
+      <div class="contact-form-wrapper reveal">
+        <form class="contact-form" id="contact-form" novalidate>
+          <div class="form-field">
+            <label for="contact-name">Name</label>
+            <input
+              type="text"
+              id="contact-name"
+              name="name"
+              placeholder="Your name"
+              autocomplete="name"
+              required
+            />
+          </div>
+
+          <div class="form-field">
+            <label for="contact-email">Email</label>
+            <input
+              type="email"
+              id="contact-email"
+              name="email"
+              placeholder="you@example.com"
+              autocomplete="email"
+              required
+            />
+          </div>
+
+          <div class="form-field">
+            <label for="contact-message">Message</label>
+            <textarea
+              id="contact-message"
+              name="message"
+              placeholder="What would you like to say?"
+              required
+            ></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary">
+            Send Message
+          </button>
+        </form>
+
+        <p class="contact-success" id="contact-success" hidden></p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="section-inner footer-inner">
+      <p class="footer-copy">
+        &copy; <span id="footer-year">2026</span> Dilshod Ulmasov. All
+        rights reserved.
+      </p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
