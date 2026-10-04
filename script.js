@@ -236,6 +236,8 @@ const I18N = {
     "form.submit": "Send Message",
     "form.success": "Thanks, {name} — I'll get back to you soon.",
     "form.successNoName": "Thanks — I'll get back to you soon.",
+    "form.sending": "Sending...",
+    "form.error": "Something went wrong. Please try again.",
 
     "footer.rights": "All rights reserved.",
   },
@@ -308,6 +310,8 @@ const I18N = {
     "form.submit": "Отправить сообщение",
     "form.success": "Спасибо, {name}! Я скоро вам отвечу.",
     "form.successNoName": "Спасибо! Я скоро вам отвечу.",
+    "form.sending": "Отправка...",
+    "form.error": "Что-то пошло не так. Попробуйте ещё раз.",
 
     "footer.rights": "Все права защищены.",
   },
@@ -380,6 +384,8 @@ const I18N = {
     "form.submit": "Xabarni yuborish",
     "form.success": "Rahmat, {name}! Tez orada sizga javob beraman.",
     "form.successNoName": "Rahmat! Tez orada sizga javob beraman.",
+    "form.sending": "Yuborilmoqda...",
+    "form.error": "Xatolik yuz berdi. Qayta urinib ko‘ring.",
 
     "footer.rights": "Barcha huquqlar himoyalangan.",
   },
@@ -527,13 +533,16 @@ if (skillsGrid) {
 
 /* ============================================
    Contact form
-   No backend yet, so this just validates and
-   swaps in a confirmation message client-side.
+   Validates, then sends the message to my email
+   through Web3Forms.
    ============================================ */
 const contactForm = document.getElementById("contact-form");
 
 if (contactForm) {
-  contactForm.addEventListener("submit", (event) => {
+  const submitBtn = contactForm.querySelector('button[type="submit"]');
+  const errorMessage = document.getElementById("contact-error");
+
+  contactForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     if (!contactForm.checkValidity()) {
@@ -541,12 +550,34 @@ if (contactForm) {
       return;
     }
 
-    submittedName = document.getElementById("contact-name").value.trim();
-    const successMessage = document.getElementById("contact-success");
+    errorMessage.hidden = true;
+    const originalLabel = submitBtn.textContent;
+    submitBtn.textContent = t("form.sending");
+    submitBtn.disabled = true;
 
-    contactForm.hidden = true;
-    renderSuccessMessage();
-    successMessage.hidden = false;
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(Object.fromEntries(new FormData(contactForm))),
+      });
+      const result = await response.json();
+      if (!result.success) throw new Error(result.message);
+
+      submittedName = document.getElementById("contact-name").value.trim();
+      const successMessage = document.getElementById("contact-success");
+
+      contactForm.reset();
+      contactForm.hidden = true;
+      renderSuccessMessage();
+      successMessage.hidden = false;
+    } catch (err) {
+      errorMessage.textContent = t("form.error");
+      errorMessage.hidden = false;
+    } finally {
+      submitBtn.textContent = originalLabel;
+      submitBtn.disabled = false;
+    }
   });
 }
 

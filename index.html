@@ -315,6 +315,10 @@
 
       <div class="contact-form-wrapper reveal">
         <form class="contact-form" id="contact-form" novalidate>
+          <input type="hidden" name="access_key" value="c10fde59-b125-4c39-b694-2807deb737fa" />
+          <input type="hidden" name="subject" value="Portfolio saytidan yangi xabar" />
+          <input type="checkbox" name="botcheck" style="display: none" tabindex="-1" autocomplete="off" />
+
           <div class="form-field">
             <label for="contact-name" data-i18n="form.name">Name</label>
             <input
@@ -354,6 +358,7 @@
           <button type="submit" class="btn btn-primary" data-i18n="form.submit">
             Send Message
           </button>
+          <p class="contact-error" id="contact-error" role="alert" hidden style="color: #f87171; text-align: center; margin-top: 12px"></p>
         </form>
 
         <p class="contact-success" id="contact-success" hidden></p>
