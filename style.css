@@ -1164,3 +1164,24 @@ html[lang="ru"] .project-title {
 }
 
   
+
+/* Logo in navbar */
+.nav-logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  margin: 0 6px 0 2px;
+  border-radius: 12px;
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+.nav-logo img {
+  display: block;
+  width: 36px;
+  height: 36px;
+}
+
+.nav-logo:hover {
+  transform: scale(1.08) rotate(-3deg);
+  filter: drop-shadow(0 0 10px rgba(94, 200, 255, 0.55));
+}
