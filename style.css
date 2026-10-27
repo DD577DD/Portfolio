@@ -221,7 +221,7 @@ footer {
 /* ---------- Sections ---------- */
 .about,
 .skills,
-.work,
+.projects,
 .certificates,
 .contact {
   padding: 6.5rem 0;
@@ -424,7 +424,7 @@ footer {
 @media (max-width: 720px) {
   .about,
   .skills,
-  .work,
+  .projects,
   .certificates,
   .contact {
     padding: 4.5rem 0;
@@ -1184,4 +1184,18 @@ html[lang="ru"] .project-title {
 .nav-logo:hover {
   transform: scale(1.08) rotate(-3deg);
   filter: drop-shadow(0 0 10px rgba(94, 200, 255, 0.55));
+}
+
+
+/* ---------- Projects section ---------- */
+.projects {
+  position: relative;
+}
+
+.projects .projects-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+}
+
+.projects .project-card {
+  height: 100%;
 }

@@ -239,6 +239,14 @@ const I18N = {
     "form.sending": "Sending...",
     "form.error": "Something went wrong. Please try again.",
 
+    "nav.projects": "Projects",
+    "projects.eyebrow": "Projects",
+    "projects.heading": "My Projects",
+    "projects.view": "View project",
+    "p1.desc": "A trilingual (Uzbek / Russian / English) website for a kindergarten in Termiz, with daily photos and videos managed through a Telegram bot.",
+    "p2.desc": "A Block Blast-style puzzle game running as a Telegram Mini App, with player accounts, friends and global and country rankings.",
+    "p3.desc": "A Telegram bot that uploads, updates and deletes daily videos and photos on a website without redeploying it.",
+
     "footer.rights": "All rights reserved.",
   },
 
@@ -313,6 +321,14 @@ const I18N = {
     "form.sending": "Отправка...",
     "form.error": "Что-то пошло не так. Попробуйте ещё раз.",
 
+    "nav.projects": "Проекты",
+    "projects.eyebrow": "Проекты",
+    "projects.heading": "Мои проекты",
+    "projects.view": "Открыть проект",
+    "p1.desc": "Трёхъязычный (узбекский / русский / английский) сайт детского сада в Термезе; ежедневные фото и видео добавляются через Telegram-бота.",
+    "p2.desc": "Головоломка в стиле Block Blast, работающая как Telegram Mini App: аккаунты игроков, друзья, мировой и страновой рейтинги.",
+    "p3.desc": "Telegram-бот, который загружает, обновляет и удаляет ежедневные видео и фото на сайте без повторного развёртывания.",
+
     "footer.rights": "Все права защищены.",
   },
 
@@ -386,6 +402,14 @@ const I18N = {
     "form.successNoName": "Rahmat! Tez orada sizga javob beraman.",
     "form.sending": "Yuborilmoqda...",
     "form.error": "Xatolik yuz berdi. Qayta urinib ko‘ring.",
+
+    "nav.projects": "Loyihalar",
+    "projects.eyebrow": "Loyihalar",
+    "projects.heading": "Mening loyihalarim",
+    "projects.view": "Loyihani ko‘rish",
+    "p1.desc": "Termizdagi bog‘cha uchun uch tilli (o‘zbek / rus / ingliz) sayt; kundalik rasm va videolar Telegram bot orqali yangilanadi.",
+    "p2.desc": "Block Blast uslubidagi jumboq o‘yin, Telegram Mini App sifatida ishlaydi: o‘yinchi akkauntlari, do‘stlar, jahon va mamlakat reytinglari.",
+    "p3.desc": "Saytdagi kundalik video va rasmlarni qayta deploy qilmasdan yuklaydigan, yangilaydigan va o‘chiradigan Telegram bot.",
 
     "footer.rights": "Barcha huquqlar himoyalangan.",
   },
