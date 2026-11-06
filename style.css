@@ -1199,3 +1199,25 @@ html[lang="ru"] .project-title {
 .projects .project-card {
   height: 100%;
 }
+
+
+/* ---------- Certificate preview images ---------- */
+.cert-preview {
+  display: block;
+  margin-bottom: 1.25rem;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid var(--border-strong);
+  background: rgba(255, 255, 255, 0.04);
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+
+.cert-preview:hover {
+  border-color: var(--blue-bright);
+}
+
+.cert-preview img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
