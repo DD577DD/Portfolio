@@ -1221,3 +1221,8 @@ html[lang="ru"] .project-title {
   width: 100%;
   height: auto;
 }
+
+/* Three certificate cards per row on wide screens */
+.certs-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+}

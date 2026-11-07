@@ -225,6 +225,10 @@ const I18N = {
     "c2.desc":
       "Why networking matters for career growth, practical networking strategies, the role of personal branding, and using digital tools to build a professional network with confidence.",
 
+    "c3.desc":
+      "An introductory course in IT customer support, completed through the Cisco Networking Academy program.",
+    "c3.date": "November 2026",
+
     "contact.eyebrow": "Contact",
     "contact.heading": "Get In Touch",
     "contact.social": "Or find me on",
@@ -307,6 +311,10 @@ const I18N = {
     "c2.desc":
       "Значение нетворкинга для карьерного роста, практические стратегии построения связей, роль личного бренда и цифровые инструменты для уверенного развития профессиональной сети контактов.",
 
+    "c3.desc":
+      "Вводный курс по ИТ-поддержке клиентов, пройденный в рамках программы Cisco Networking Academy.",
+    "c3.date": "Ноябрь 2026",
+
     "contact.eyebrow": "Контакты",
     "contact.heading": "Связаться со мной",
     "contact.social": "Или найдите меня здесь",
@@ -388,6 +396,10 @@ const I18N = {
       "Ma’lumotlar fani va tahlilining asosiy amaliyotlari, usullari va vositalari, biznes uchun ma’lumotlarga asoslangan yondashuvning afzalliklari va qiyinchiliklari hamda bu sohada karyera qurish uchun zarur ko‘nikmalar.",
     "c2.desc":
       "Karyera o‘sishida networkingning ahamiyati, aloqalar o‘rnatishning amaliy strategiyalari, shaxsiy brendning roli va professional aloqalar tarmog‘ini ishonch bilan kengaytirish uchun raqamli vositalar.",
+
+    "c3.desc":
+      "IT bo‘yicha mijozlarni qo‘llab-quvvatlash asoslari kursi, Cisco Networking Academy dasturi doirasida tugatilgan.",
+    "c3.date": "2026-yil noyabr",
 
     "contact.eyebrow": "Aloqa",
     "contact.heading": "Men bilan bog‘laning",
