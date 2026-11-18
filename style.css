@@ -1226,3 +1226,151 @@ html[lang="ru"] .project-title {
 .certs-grid {
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
 }
+
+
+/* ============================================
+   Certificates carousel
+   ============================================ */
+.certs-carousel {
+  position: relative;
+}
+
+.certs-carousel .certs-grid {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  padding: 0.5rem 0.25rem 1rem;
+  margin: 0 -0.25rem;
+  cursor: grab;
+  outline: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.certs-carousel .certs-grid::-webkit-scrollbar { display: none; }
+
+.certs-carousel .certs-grid.is-dragging {
+  cursor: grabbing;
+  scroll-snap-type: none;
+  scroll-behavior: auto;
+  user-select: none;
+}
+
+.certs-carousel .cert-card {
+  flex: 0 0 min(380px, 82vw);
+  height: auto;
+  scroll-snap-align: start;
+  opacity: var(--co, 1);
+  transition: transform 0.35s ease, opacity 0.35s ease, border-color 0.25s ease, background-color 0.25s ease;
+}
+
+.certs-carousel .cert-card:hover {
+  transform: translateY(-4px);
+  opacity: 1;
+}
+
+/* Every preview the same size, whatever the certificate's shape */
+.certs-carousel .cert-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 3 / 2;
+  background: #fff;
+}
+
+.certs-carousel .cert-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Text grows, so meta + button always sit on the same line */
+.certs-carousel .cert-card .project-description {
+  flex: 1 1 auto;
+}
+
+.certs-carousel .cert-meta {
+  grid-template-columns: 1fr;
+  gap: 0.8rem;
+  margin: 0.25rem 0 1.25rem;
+}
+
+.certs-carousel .cert-id {
+  word-break: normal;
+  white-space: nowrap;
+  font-size: 0.74rem !important;
+}
+
+.certs-carousel .cert-card > .btn {
+  margin-top: 0;
+}
+
+.certs-carousel .cert-note {
+  min-height: 3em;
+}
+
+/* Arrows */
+.certs-arrow {
+  position: absolute;
+  top: 150px;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  color: #fff;
+  background: rgba(14, 26, 54, 0.88);
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  transition: opacity 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+}
+
+.certs-arrow:hover:not(:disabled) {
+  border-color: var(--blue-bright);
+  transform: scale(1.08);
+}
+
+.certs-arrow:disabled {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.certs-prev { left: -22px; }
+.certs-next { right: -22px; }
+
+/* Dots */
+.certs-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.certs-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(147, 163, 192, 0.4);
+  cursor: pointer;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.certs-dot.is-active {
+  width: 26px;
+  background: var(--blue-bright);
+}
+
+@media (max-width: 720px) {
+  .certs-arrow { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .certs-carousel .cert-card,
+  .certs-dot,
+  .certs-arrow { transition: none; }
+}

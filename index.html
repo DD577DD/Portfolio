@@ -247,7 +247,14 @@
       <p class="section-eyebrow reveal" data-i18n="certs.eyebrow">Certificates</p>
       <h2 class="section-heading reveal" data-i18n="certs.heading">Courses I've Completed</h2>
 
-      <div class="certs-grid">
+      <div class="certs-carousel" id="certs-carousel">
+        <button type="button" class="certs-arrow certs-prev" aria-label="Previous certificate" data-i18n-aria-label="certs.prev" disabled>
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+        </button>
+        <button type="button" class="certs-arrow certs-next" aria-label="Next certificate" data-i18n-aria-label="certs.next">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+        </button>
+      <div class="certs-grid" id="certs-grid" tabindex="0" aria-label="Certificates">
         <article class="project-card cert-card reveal">
           <div class="cert-head">
             <span class="cert-icon" aria-hidden="true">
@@ -338,6 +345,7 @@
             rel="noopener noreferrer"
             data-i18n="certs.view"
           >View certificate</a>
+          <p class="cert-note" data-i18n="c3.note">Opens the full certificate image.</p>
         </article>
 
         <article class="project-card cert-card reveal">
@@ -386,6 +394,8 @@
           <p class="cert-note" data-i18n="c4.note">Opens the official Skilljar page, where anyone can verify it.</p>
         </article>
       </div>
+      </div>
+      <div class="certs-dots" id="certs-dots" aria-hidden="true"></div>
     </div>
   </section>
 

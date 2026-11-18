@@ -233,6 +233,10 @@ const I18N = {
       "An introductory course on working with Claude, completed through Anthropic’s online learning platform.",
     "c4.note": "Opens the official Skilljar page, where anyone can verify it.",
 
+    "certs.prev": "Previous certificate",
+    "certs.next": "Next certificate",
+    "c3.note": "Opens the full certificate image.",
+
     "contact.eyebrow": "Contact",
     "contact.heading": "Get In Touch",
     "contact.social": "Or find me on",
@@ -323,6 +327,10 @@ const I18N = {
       "Вводный курс по работе с Claude, пройденный на образовательной платформе Anthropic.",
     "c4.note": "Откроется официальная страница Skilljar, где любой может проверить сертификат.",
 
+    "certs.prev": "Предыдущий сертификат",
+    "certs.next": "Следующий сертификат",
+    "c3.note": "Откроется полное изображение сертификата.",
+
     "contact.eyebrow": "Контакты",
     "contact.heading": "Связаться со мной",
     "contact.social": "Или найдите меня здесь",
@@ -412,6 +420,10 @@ const I18N = {
     "c4.desc":
       "Claude bilan ishlash bo‘yicha kirish kursi, Anthropic o‘quv platformasida tugatilgan.",
     "c4.note": "Rasmiy Skilljar sahifasi ochiladi, u yerda har kim tekshirib ko‘rishi mumkin.",
+
+    "certs.prev": "Oldingi sertifikat",
+    "certs.next": "Keyingi sertifikat",
+    "c3.note": "Sertifikatning to‘liq rasmi ochiladi.",
 
     "contact.eyebrow": "Aloqa",
     "contact.heading": "Men bilan bog‘laning",
@@ -721,3 +733,102 @@ if (footerYear) {
 }
 
   
+
+
+/* ============================================
+   Certificates carousel
+   Swipe / drag / arrows / keyboard, with dots.
+   ============================================ */
+(function () {
+  const wrap = document.getElementById("certs-carousel");
+  const track = document.getElementById("certs-grid");
+  const dotsBox = document.getElementById("certs-dots");
+  if (!wrap || !track) return;
+
+  const cards = Array.from(track.children);
+  const prev = wrap.querySelector(".certs-prev");
+  const next = wrap.querySelector(".certs-next");
+
+  const dots = cards.map((_, i) => {
+    const d = document.createElement("span");
+    d.className = "certs-dot";
+    d.addEventListener("click", () => goTo(i));
+    dotsBox.appendChild(d);
+    return d;
+  });
+
+  function step() {
+    const c = cards[0];
+    const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+    return c.getBoundingClientRect().width + gap;
+  }
+
+  function currentIndex() {
+    return Math.max(0, Math.min(cards.length - 1, Math.round(track.scrollLeft / step())));
+  }
+
+  function goTo(i) {
+    const idx = Math.max(0, Math.min(cards.length - 1, i));
+    track.scrollTo({ left: idx * step(), behavior: "smooth" });
+  }
+
+  function update() {
+    const max = track.scrollWidth - track.clientWidth;
+    const i = currentIndex();
+    prev.disabled = track.scrollLeft <= 4;
+    next.disabled = track.scrollLeft >= max - 4;
+    const act = track.scrollLeft >= max - 4 ? cards.length - 1 : i;
+    dots.forEach((d, k) => d.classList.toggle("is-active", k === act));
+    // Cards near the centre of view stand out a little more
+    const mid = track.scrollLeft + track.clientWidth / 2;
+    cards.forEach((card) => {
+      const centre = card.offsetLeft + card.offsetWidth / 2;
+      const dist = Math.min(1, Math.abs(centre - mid) / (track.clientWidth * 0.6));
+      card.style.setProperty("--co", (1 - dist * 0.3).toFixed(3));
+    });
+    wrap.classList.toggle("at-start", track.scrollLeft <= 4);
+    wrap.classList.toggle("at-end", track.scrollLeft >= max - 4);
+  }
+
+  let raf = 0;
+  track.addEventListener("scroll", () => {
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(update);
+  }, { passive: true });
+  window.addEventListener("resize", update);
+
+  prev.addEventListener("click", () => goTo(currentIndex() - 1));
+  next.addEventListener("click", () => goTo(currentIndex() + 1));
+  track.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight") { e.preventDefault(); goTo(currentIndex() + 1); }
+    if (e.key === "ArrowLeft") { e.preventDefault(); goTo(currentIndex() - 1); }
+  });
+
+  // Mouse drag (touch already swipes natively)
+  let down = false, startX = 0, startLeft = 0, moved = 0;
+  track.addEventListener("pointerdown", (e) => {
+    if (e.pointerType !== "mouse" || e.button !== 0) return;
+    down = true; moved = 0;
+    startX = e.clientX; startLeft = track.scrollLeft;
+    track.classList.add("is-dragging");
+  });
+  window.addEventListener("pointermove", (e) => {
+    if (!down) return;
+    const dx = e.clientX - startX;
+    moved = Math.max(moved, Math.abs(dx));
+    track.scrollLeft = startLeft - dx;
+  });
+  window.addEventListener("pointerup", () => {
+    if (!down) return;
+    down = false;
+    track.classList.remove("is-dragging");
+    goTo(currentIndex());
+  });
+  // A drag should not open a certificate link
+  track.addEventListener("click", (e) => {
+    if (moved > 6) { e.preventDefault(); e.stopPropagation(); moved = 0; }
+  }, true);
+  track.addEventListener("dragstart", (e) => e.preventDefault());
+
+  update();
+})();
