@@ -1374,3 +1374,27 @@ html[lang="ru"] .project-title {
   .certs-dot,
   .certs-arrow { transition: none; }
 }
+
+/* ---------- One certificate at a time ---------- */
+.certs-carousel {
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.certs-carousel .certs-grid {
+  padding: 0.5rem 0 1rem;
+  margin: 0;
+}
+
+.certs-carousel .cert-card {
+  flex: 0 0 100%;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+}
+
+.certs-prev { left: -68px; }
+.certs-next { right: -68px; }
+
+@media (max-width: 640px) {
+  .certs-arrow { display: none; }
+}
