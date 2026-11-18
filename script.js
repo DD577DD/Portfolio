@@ -229,6 +229,10 @@ const I18N = {
       "An introductory course in IT customer support, completed through the Cisco Networking Academy program.",
     "c3.date": "November 2026",
 
+    "c4.desc":
+      "An introductory course on working with Claude, completed through Anthropic’s online learning platform.",
+    "c4.note": "Opens the official Skilljar page, where anyone can verify it.",
+
     "contact.eyebrow": "Contact",
     "contact.heading": "Get In Touch",
     "contact.social": "Or find me on",
@@ -315,6 +319,10 @@ const I18N = {
       "Вводный курс по ИТ-поддержке клиентов, пройденный в рамках программы Cisco Networking Academy.",
     "c3.date": "Ноябрь 2026",
 
+    "c4.desc":
+      "Вводный курс по работе с Claude, пройденный на образовательной платформе Anthropic.",
+    "c4.note": "Откроется официальная страница Skilljar, где любой может проверить сертификат.",
+
     "contact.eyebrow": "Контакты",
     "contact.heading": "Связаться со мной",
     "contact.social": "Или найдите меня здесь",
@@ -400,6 +408,10 @@ const I18N = {
     "c3.desc":
       "IT bo‘yicha mijozlarni qo‘llab-quvvatlash asoslari kursi, Cisco Networking Academy dasturi doirasida tugatilgan.",
     "c3.date": "2026-yil noyabr",
+
+    "c4.desc":
+      "Claude bilan ishlash bo‘yicha kirish kursi, Anthropic o‘quv platformasida tugatilgan.",
+    "c4.note": "Rasmiy Skilljar sahifasi ochiladi, u yerda har kim tekshirib ko‘rishi mumkin.",
 
     "contact.eyebrow": "Aloqa",
     "contact.heading": "Men bilan bog‘laning",
