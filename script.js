@@ -779,13 +779,6 @@ if (footerYear) {
     next.disabled = track.scrollLeft >= max - 4;
     const act = track.scrollLeft >= max - 4 ? cards.length - 1 : i;
     dots.forEach((d, k) => d.classList.toggle("is-active", k === act));
-    // Cards near the centre of view stand out a little more
-    const mid = track.scrollLeft + track.clientWidth / 2;
-    cards.forEach((card) => {
-      const centre = card.offsetLeft + card.offsetWidth / 2;
-      const dist = Math.min(1, Math.abs(centre - mid) / (track.clientWidth * 0.6));
-      card.style.setProperty("--co", (1 - dist * 0.3).toFixed(3));
-    });
     wrap.classList.toggle("at-start", track.scrollLeft <= 4);
     wrap.classList.toggle("at-end", track.scrollLeft >= max - 4);
   }

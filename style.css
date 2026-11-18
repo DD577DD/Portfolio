@@ -1398,3 +1398,24 @@ html[lang="ru"] .project-title {
 @media (max-width: 640px) {
   .certs-arrow { display: none; }
 }
+
+/* ---------- Two certificates at a time (one on phones) ---------- */
+.certs-carousel {
+  max-width: 800px;
+}
+
+.certs-carousel .cert-card {
+  flex: 0 0 calc((100% - 1.5rem) / 2);
+  scroll-snap-align: start;
+  scroll-snap-stop: normal;
+}
+
+@media (max-width: 720px) {
+  .certs-carousel {
+    max-width: 480px;
+  }
+  .certs-carousel .cert-card {
+    flex: 0 0 100%;
+    scroll-snap-align: center;
+  }
+}
