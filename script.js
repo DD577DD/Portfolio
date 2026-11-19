@@ -737,7 +737,8 @@ if (footerYear) {
 
 /* ============================================
    Certificates carousel
-   Swipe / drag / arrows / keyboard, with dots.
+   Endless loop: slides left to right forever,
+   drag / swipe / arrows / dots still work.
    ============================================ */
 (function () {
   const wrap = document.getElementById("certs-carousel");
@@ -745,56 +746,102 @@ if (footerYear) {
   const dotsBox = document.getElementById("certs-dots");
   if (!wrap || !track) return;
 
-  const cards = Array.from(track.children);
   const prev = wrap.querySelector(".certs-prev");
   const next = wrap.querySelector(".certs-next");
+  const total = track.children.length;
+  Array.from(track.children).forEach((c, i) => (c.dataset.i = i));
+  prev.disabled = false;
+  next.disabled = false;
 
-  const dots = cards.map((_, i) => {
+  const dots = Array.from(track.children).map((_, i) => {
     const d = document.createElement("span");
     d.className = "certs-dot";
-    d.addEventListener("click", () => goTo(i));
+    d.addEventListener("click", () => jumpTo(i));
     dotsBox.appendChild(d);
     return d;
   });
 
   function step() {
-    const c = cards[0];
+    const c = track.children[0];
     const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
     return c.getBoundingClientRect().width + gap;
   }
 
-  function currentIndex() {
-    return Math.max(0, Math.min(cards.length - 1, Math.round(track.scrollLeft / step())));
+  function maxIndex() {
+    return Math.max(0, Math.round((track.scrollWidth - track.clientWidth) / step()));
   }
 
-  function goTo(i) {
-    const idx = Math.max(0, Math.min(cards.length - 1, i));
-    track.scrollTo({ left: idx * step(), behavior: "smooth" });
+  function currentIndex() {
+    return Math.max(0, Math.min(maxIndex(), Math.round(track.scrollLeft / step())));
+  }
+
+  function instant(fn) {
+    const snap = track.style.scrollSnapType;
+    track.style.scrollSnapType = "none";
+    track.style.scrollBehavior = "auto";
+    fn();
+    // restore on the next frame so the browser does not re-snap mid-change
+    requestAnimationFrame(() => {
+      track.style.scrollSnapType = snap;
+      track.style.scrollBehavior = "";
+    });
+  }
+
+  // Cards that have scrolled past the left edge go to the back of the line
+  function normalise() {
+    const k = currentIndex();
+    if (k <= 0) return;
+    instant(() => {
+      const st = step();
+      for (let n = 0; n < k; n++) track.appendChild(track.firstElementChild);
+      track.scrollLeft -= k * st;
+    });
+  }
+
+  function goNext() {
+    track.scrollTo({ left: step(), behavior: "smooth" });
+  }
+
+  function goPrev() {
+    instant(() => {
+      const st = step();
+      track.insertBefore(track.lastElementChild, track.firstElementChild);
+      track.scrollLeft += st;
+    });
+    requestAnimationFrame(() =>
+      track.scrollTo({ left: 0, behavior: "smooth" })
+    );
+  }
+
+  function jumpTo(i) {
+    const pos = Array.from(track.children).findIndex((c) => Number(c.dataset.i) === i);
+    if (pos <= 0) return;
+    instant(() => {
+      for (let n = 0; n < pos; n++) track.appendChild(track.firstElementChild);
+      track.scrollLeft = 0;
+    });
+    update();
   }
 
   function update() {
-    const max = track.scrollWidth - track.clientWidth;
-    const i = currentIndex();
-    prev.disabled = track.scrollLeft <= 4;
-    next.disabled = track.scrollLeft >= max - 4;
-    const act = track.scrollLeft >= max - 4 ? cards.length - 1 : i;
+    const first = track.children[currentIndex()];
+    const act = first ? Number(first.dataset.i) : 0;
     dots.forEach((d, k) => d.classList.toggle("is-active", k === act));
-    wrap.classList.toggle("at-start", track.scrollLeft <= 4);
-    wrap.classList.toggle("at-end", track.scrollLeft >= max - 4);
   }
 
-  let raf = 0;
+  let settle = 0;
   track.addEventListener("scroll", () => {
-    cancelAnimationFrame(raf);
-    raf = requestAnimationFrame(update);
+    update();
+    clearTimeout(settle);
+    settle = setTimeout(() => { if (!down) normalise(); update(); }, 140);
   }, { passive: true });
   window.addEventListener("resize", update);
 
-  prev.addEventListener("click", () => goTo(currentIndex() - 1));
-  next.addEventListener("click", () => goTo(currentIndex() + 1));
+  prev.addEventListener("click", goPrev);
+  next.addEventListener("click", goNext);
   track.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowRight") { e.preventDefault(); goTo(currentIndex() + 1); }
-    if (e.key === "ArrowLeft") { e.preventDefault(); goTo(currentIndex() - 1); }
+    if (e.key === "ArrowRight") { e.preventDefault(); goNext(); }
+    if (e.key === "ArrowLeft") { e.preventDefault(); goPrev(); }
   });
 
   // Mouse drag (touch already swipes natively)
@@ -815,7 +862,7 @@ if (footerYear) {
     if (!down) return;
     down = false;
     track.classList.remove("is-dragging");
-    goTo(currentIndex());
+    track.scrollTo({ left: currentIndex() * step(), behavior: "smooth" });
   });
   // A drag should not open a certificate link
   track.addEventListener("click", (e) => {
@@ -823,21 +870,12 @@ if (footerYear) {
   }, true);
   track.addEventListener("dragstart", (e) => e.preventDefault());
 
-  // ---- Auto-advance: slides along on its own, loops back at the end ----
+  // ---- Auto-advance: always slides the same way, round and round ----
   const AUTO_MS = 4000;
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   let timer = null;
   let inView = false;
   let hovering = false;
-
-  function advance() {
-    const max = track.scrollWidth - track.clientWidth;
-    if (track.scrollLeft >= max - 4) {
-      track.scrollTo({ left: 0, behavior: "smooth" });
-    } else {
-      goTo(currentIndex() + 1);
-    }
-  }
 
   function stop() {
     if (timer) { clearInterval(timer); timer = null; }
@@ -845,7 +883,7 @@ if (footerYear) {
 
   function start() {
     if (reduceMotion || timer || !inView || hovering || down || document.hidden) return;
-    timer = setInterval(advance, AUTO_MS);
+    timer = setInterval(goNext, AUTO_MS);
   }
 
   function restart() { stop(); start(); }
@@ -854,13 +892,10 @@ if (footerYear) {
   wrap.addEventListener("mouseleave", () => { hovering = false; start(); });
   wrap.addEventListener("focusin", () => { hovering = true; stop(); });
   wrap.addEventListener("focusout", () => { hovering = false; start(); });
-  // Touch: pause while a finger is on it, resume afterwards
   track.addEventListener("touchstart", stop, { passive: true });
   track.addEventListener("touchend", () => setTimeout(start, 2500), { passive: true });
-  // Any manual move restarts the countdown
   [prev, next].forEach((b) => b.addEventListener("click", restart));
   dotsBox.addEventListener("click", restart);
-  window.addEventListener("pointerup", () => { if (!hovering) restart(); });
   document.addEventListener("visibilitychange", () => (document.hidden ? stop() : start()));
 
   if ("IntersectionObserver" in window) {
