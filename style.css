@@ -1401,7 +1401,7 @@ html[lang="ru"] .project-title {
 
 /* ---------- Two certificates at a time (one on phones) ---------- */
 .certs-carousel {
-  max-width: 800px;
+  max-width: 980px;
 }
 
 .certs-carousel .cert-card {
@@ -1418,4 +1418,9 @@ html[lang="ru"] .project-title {
     flex: 0 0 100%;
     scroll-snap-align: center;
   }
+}
+
+/* Arrows sit outside the cards, so hide them where there is no room */
+@media (max-width: 1100px) {
+  .certs-arrow { display: none; }
 }
