@@ -823,5 +823,55 @@ if (footerYear) {
   }, true);
   track.addEventListener("dragstart", (e) => e.preventDefault());
 
+  // ---- Auto-advance: slides along on its own, loops back at the end ----
+  const AUTO_MS = 4000;
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let timer = null;
+  let inView = false;
+  let hovering = false;
+
+  function advance() {
+    const max = track.scrollWidth - track.clientWidth;
+    if (track.scrollLeft >= max - 4) {
+      track.scrollTo({ left: 0, behavior: "smooth" });
+    } else {
+      goTo(currentIndex() + 1);
+    }
+  }
+
+  function stop() {
+    if (timer) { clearInterval(timer); timer = null; }
+  }
+
+  function start() {
+    if (reduceMotion || timer || !inView || hovering || down || document.hidden) return;
+    timer = setInterval(advance, AUTO_MS);
+  }
+
+  function restart() { stop(); start(); }
+
+  wrap.addEventListener("mouseenter", () => { hovering = true; stop(); });
+  wrap.addEventListener("mouseleave", () => { hovering = false; start(); });
+  wrap.addEventListener("focusin", () => { hovering = true; stop(); });
+  wrap.addEventListener("focusout", () => { hovering = false; start(); });
+  // Touch: pause while a finger is on it, resume afterwards
+  track.addEventListener("touchstart", stop, { passive: true });
+  track.addEventListener("touchend", () => setTimeout(start, 2500), { passive: true });
+  // Any manual move restarts the countdown
+  [prev, next].forEach((b) => b.addEventListener("click", restart));
+  dotsBox.addEventListener("click", restart);
+  window.addEventListener("pointerup", () => { if (!hovering) restart(); });
+  document.addEventListener("visibilitychange", () => (document.hidden ? stop() : start()));
+
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver((entries) => {
+      inView = entries[0].isIntersecting;
+      inView ? start() : stop();
+    }, { threshold: 0.3 }).observe(wrap);
+  } else {
+    inView = true;
+    start();
+  }
+
   update();
 })();
