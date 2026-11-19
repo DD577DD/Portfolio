@@ -1424,3 +1424,43 @@ html[lang="ru"] .project-title {
 @media (max-width: 1100px) {
   .certs-arrow { display: none; }
 }
+
+
+/* ============================================
+   Phones & tablets: keep scrolling smooth.
+   Fixed backgrounds, huge blurs and backdrop
+   filters are very heavy on mobile GPUs.
+   ============================================ */
+@media (hover: none), (max-width: 900px) {
+  body {
+    background-attachment: scroll;
+  }
+
+  .glow {
+    filter: none;
+    animation: none;
+    opacity: 0.22;
+    -webkit-mask-image: radial-gradient(circle, #000 0%, transparent 68%);
+    mask-image: radial-gradient(circle, #000 0%, transparent 68%);
+  }
+
+  .nav-inner,
+  .social-link,
+  .certs-arrow,
+  .nav-links {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  .nav-inner {
+    background: rgba(12, 22, 46, 0.92);
+  }
+
+  .skills-grid .skill-card {
+    filter: none;
+  }
+
+  .cert-preview img {
+    will-change: auto;
+  }
+}

@@ -12,13 +12,19 @@ const prefersReducedMotion = window.matchMedia(
   "(prefers-reduced-motion: reduce)"
 ).matches;
 
+// Phones / tablets: far fewer particles, and the canvas rests while the
+// page is being scrolled, so scrolling stays smooth.
+const isTouch = window.matchMedia("(hover: none)").matches;
+let lastScrollAt = 0;
+window.addEventListener("scroll", () => { lastScrollAt = performance.now(); }, { passive: true });
+
 const CONFIG = {
-  maxDistance: 130, // px within which two particles link
+  maxDistance: isTouch ? 100 : 130, // px within which two particles link
   mouseRadius: 160, // px within which a particle links to the cursor
   particleRGB: "94, 200, 255", // --blue-bright
   lineRGB: "47, 111, 237", // --blue
-  minParticles: 40,
-  maxParticles: 110,
+  minParticles: isTouch ? 18 : 40,
+  maxParticles: isTouch ? 34 : 110,
 };
 
 let width = 0;
@@ -101,7 +107,19 @@ function drawConnections() {
   }
 }
 
+let frameSkip = false;
+
 function step() {
+  // On touch devices: skip every other frame, stand still while scrolling,
+  // and do nothing when the tab is hidden.
+  if (isTouch && !prefersReducedMotion) {
+    frameSkip = !frameSkip;
+    if (frameSkip || document.hidden || performance.now() - lastScrollAt < 180) {
+      requestAnimationFrame(step);
+      return;
+    }
+  }
+
   ctx.clearRect(0, 0, width, height);
 
   for (const p of particles) {
@@ -883,7 +901,10 @@ if (footerYear) {
 
   function start() {
     if (reduceMotion || timer || !inView || hovering || down || document.hidden) return;
-    timer = setInterval(goNext, AUTO_MS);
+    timer = setInterval(() => {
+      if (performance.now() - lastScrollAt < 1500) return;
+      goNext();
+    }, AUTO_MS);
   }
 
   function restart() { stop(); start(); }
