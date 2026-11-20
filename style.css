@@ -770,13 +770,6 @@ html[lang="ru"] .project-title {
   color: #fff;
 }
 
-.nav-divider {
-  width: 1px;
-  height: 22px;
-  margin: 0 6px;
-  background: rgba(94, 200, 255, 0.18);
-}
-
 .lang-switch {
   display: inline-flex;
   align-items: center;
@@ -1462,5 +1455,12 @@ html[lang="ru"] .project-title {
 
   .cert-preview img {
     will-change: auto;
+  }
+}
+
+/* English only: the menu button sits at the right on phones */
+@media (max-width: 720px) {
+  .nav-inner {
+    justify-content: flex-end;
   }
 }
